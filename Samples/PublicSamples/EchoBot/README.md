@@ -1,6 +1,7 @@
 # 使用方法
 
 1. 構成図通りに構成する
+    - ポートの対応が同じであれば、appsettings.jsonを変更しなくてもよいが、ポートが変わる場合適切に設定する必要がある。自宅のためルーターがあるだけで、ルーターがなくても流れが変わらなければ問題ない
 1. PC2でのport proxyを設定し、 https://github.com/AIAquapolis/solepro_moriya_misc/issues/46#issuecomment-1256310560 のような出力となるようにする
 1. PC2のfirewallで14872,7000,9442を許可する
 1. src/EchoBot.sln をVisual Studioで実行し「開始」をクリックすると起動できる。ローカルのPCなどで実行する場合、途中でエラーが表示される場合があるが、しばらく待ってrunningと表示されれば成功している
@@ -14,6 +15,28 @@ curl --location --request POST 'https://botlocal.teamsbot20220822.com/joinCall' 
 ```
 
 ただし、joinURLの中身はteamsの音声会議の画面の「会議の詳細を表示する」をクリックすると表示される「会議に参加するにはここをクリックしてください」というリンクのアドレスで置き換えること
+
+# ドメインについて
+
+ドメインはAWSで管理している。自動更新されない設定のため注意する。Aレコードを変更して、実行環境のIPアドレスを適宜設定すること。森谷自宅の場合はbotlocal,tcplocalともに森谷自宅のIPアドレスを設定している
+
+# 各種アカウント
+
+- AWSアカウント(432373220957からswitch roleで224950003417)
+    - ドメイン管理用
+- office
+    - developer用アカウント
+	- 共通パスワード c6M53hsrEqt*xE!R
+	- adminユーザー tm20220822admin@x82bk.onmicrosoft.com
+	- ユーザー
+	    - AdeleV@x82bk.onmicrosoft.com
+		- AlexW@x82bk.onmicrosoft.com
+		- DiegoS@x82bk.onmicrosoft.com
+- azure
+    - h.kubota.nttr@gmail.com
+	- bot設定が存在する
+
+
 
 # 以下、オリジナルのREADME.md
 
