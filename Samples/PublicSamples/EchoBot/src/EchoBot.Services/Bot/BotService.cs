@@ -58,6 +58,7 @@ namespace EchoBot.Services.Bot
         private readonly AppSettings _settings;
 
         private readonly AzureSettings _azureSettings;
+        public static ConcurrentDictionary<string, string> threadIdDict = new ConcurrentDictionary<string, string>();
 
         /// <summary>
         /// Gets the collection of call handlers.
@@ -153,10 +154,12 @@ namespace EchoBot.Services.Bot
         /// <returns>The <see cref="ICall" /> that was requested to join.</returns>
         public async Task<ICall> JoinCallAsync(JoinCallBody joinCallBody)
         {
-            // A tracking id for logging purposes. Helps identify this call in logs.
-            var scenarioId = Guid.NewGuid();
 
             var (chatInfo, meetingInfo) = JoinInfo.ParseJoinURL(joinCallBody.JoinUrl);
+
+            // A tracking id for logging purposes. Helps identify this call in logs.
+            var scenarioId = Guid.NewGuid();
+            threadIdDict[scenarioId.ToString()] = chatInfo.ThreadId;
 
             var tenantId = (meetingInfo as OrganizerMeetingInfo).Organizer.GetPrimaryIdentity().GetTenantId();
             var mediaSession = this.CreateLocalMediaSession();
@@ -165,7 +168,7 @@ namespace EchoBot.Services.Bot
             {
                 TenantId = tenantId,
             };
-
+           
             if (!string.IsNullOrWhiteSpace(joinCallBody.DisplayName))
             {
                 // Teams client does not allow changing of ones own display name.
@@ -203,7 +206,7 @@ namespace EchoBot.Services.Bot
                         // Note! Currently, the only audio format supported when receiving unmixed audio is Pcm16K
                         SupportedAudioFormat = AudioFormat.Pcm16K,
                         ReceiveUnmixedMeetingAudio = false //get the extra buffers for the speakers
-                },
+                    },
                     new VideoSocketSettings
                     {
                         StreamDirections = StreamDirection.Inactive
@@ -224,6 +227,7 @@ namespace EchoBot.Services.Bot
         /// <param name="args">The <see cref="CollectionEventArgs{TResource}" /> instance containing the event data.</param>
         private void CallsOnIncoming(ICallCollection sender, CollectionEventArgs<ICall> args)
         {
+            _logger.LogInformation("CallsOnIncoming");
             args.AddedResources.ForEach(call =>
             {
                 // Get the policy recording parameters.
@@ -275,6 +279,7 @@ namespace EchoBot.Services.Bot
         /// <param name="args">The <see cref="CollectionEventArgs{ICall}" /> instance containing the event data.</param>
         private void CallsOnUpdated(ICallCollection sender, CollectionEventArgs<ICall> args)
         {
+            _logger.LogInformation("CallsOnUpdated");
             foreach (var call in args.AddedResources)
             {
                 var callHandler = new CallHandler(call, _settings, _logger);

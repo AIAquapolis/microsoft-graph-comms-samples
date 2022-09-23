@@ -1,5 +1,6 @@
 using EchoBot.Services.Contract;
 using Microsoft.Extensions.Logging;
+using System;
 using MediaLogLevel = Microsoft.Skype.Bots.Media.LogLevel;
 
 namespace EchoBot.Services.Http
@@ -13,6 +14,7 @@ namespace EchoBot.Services.Http
         /// The logger
         /// </summary>
         private readonly ILogger _logger;
+        private long throttle = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExceptionLogger" /> class.
@@ -25,6 +27,14 @@ namespace EchoBot.Services.Http
 
        public void WriteLog(MediaLogLevel level, string logStatement)
        {
+            if (logStatement.Contains("audio player low on frames event was raised"))
+            {
+                if (throttle > 0 && throttle + 5000 > DateTime.Now.Ticks / 10000)
+                {
+                    return;
+                }
+                throttle = DateTime.Now.Ticks / 10000;
+            }
            LogLevel logLevel;
             switch (level)
             {

@@ -27,6 +27,9 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using EchoBot.Services.ServiceSetup;
 using Microsoft.Extensions.Logging;
+using System.Net.Sockets;
+using Microsoft.Graph;
+using System.Linq;
 
 namespace EchoBot.Services.Bot
 {
@@ -57,19 +60,25 @@ namespace EchoBot.Services.Bot
         private List<AudioMediaBuffer> audioMediaBuffers = new List<AudioMediaBuffer>();
         private int shutdown;
         private readonly CognitiveServicesService _languageService;
+        private readonly ICall call;
+        private readonly string threadId;
+        private int dominantSpeakerId = -1;
+
+        private TcpClient analysisClient = new TcpClient("192.168.10.9", 59888);
+        private NetworkStream analysisStream;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BotMediaStream" /> class.
         /// </summary>
         /// <param name="mediaSession">The media session.</param>
-        /// <param name="callId">The call identity</param>
+        /// <param name="call">The call</param>
         /// <param name="graphLogger">The Graph logger.</param>
         /// <param name="logger">The logger.</param>
         /// <param name="settings">Azure settings</param>
         /// <exception cref="InvalidOperationException">A mediaSession needs to have at least an audioSocket</exception>
         public BotMediaStream(
             ILocalMediaSession mediaSession,
-            string callId,
+            ICall call,
             IGraphLogger graphLogger,
             ILogger logger,
             AppSettings settings
@@ -87,6 +96,10 @@ namespace EchoBot.Services.Bot
             this.audioSendStatusActive = new TaskCompletionSource<bool>();
             this.startVideoPlayerCompleted = new TaskCompletionSource<bool>();
 
+            this.analysisStream = this.analysisClient.GetStream();
+            this.call = call;
+            this.threadId = BotService.threadIdDict[call.ScenarioId.ToString()];
+
             // Subscribe to the audio media.
             this._audioSocket = mediaSession.AudioSocket;
             if (this._audioSocket == null)
@@ -95,6 +108,7 @@ namespace EchoBot.Services.Bot
             }
 
             this._audioSocket.AudioSendStatusChanged += OnAudioSendStatusChanged;
+            this._audioSocket.DominantSpeakerChanged += OnDominantSpeakerChanged;
 
             _logger = logger;
 
@@ -201,6 +215,16 @@ namespace EchoBot.Services.Bot
             }
         }
 
+        private void OnDominantSpeakerChanged(object sender, DominantSpeakerChangedEventArgs e)
+        {
+            _logger.LogInformation($"[DominantSpeakerChangedEventArgs(CurrentDominantSpeaker={e.CurrentDominantSpeaker})]");
+
+            if (e.CurrentDominantSpeaker != DominantSpeakerChangedEventArgs.None)
+            {
+                this.dominantSpeakerId = (int)e.CurrentDominantSpeaker;
+            }
+        }
+
         /// <summary>
         /// Receive audio from subscribed participant.
         /// </summary>
@@ -212,6 +236,7 @@ namespace EchoBot.Services.Bot
 
             try
             {
+                
                 if (_languageService != null)
                 {
                     // send audio buffer to language service for processing
@@ -226,12 +251,23 @@ namespace EchoBot.Services.Bot
                     var length = e.Buffer.Length;
                     if (length > 0)
                     {
-                        var buffer = new byte[length];
-                        Marshal.Copy(e.Buffer.Data, buffer, 0, (int)length);
+                        var abuffer = new byte[length];
+                        Marshal.Copy(e.Buffer.Data, abuffer, 0, (int)length);
 
-                        var currentTick = DateTime.Now.Ticks;
-                        this.audioMediaBuffers = Util.Utilities.CreateAudioMediaBuffers(buffer, currentTick, _logger);
-                        await this.audioVideoFramePlayer.EnqueueBuffersAsync(this.audioMediaBuffers, new List<VideoMediaBuffer>());
+                        if (this.dominantSpeakerId != -1)
+                        {
+                            var p = this.GetParticipantFromMSI((uint)this.dominantSpeakerId);
+                            if (p != null && p.Resource.Info.Identity.User != null)
+                            {
+                                var text = "{\"speaker\":\"" + p.Resource.Info.Identity.User.DisplayName + "\",\"threadId\":\"" + this.threadId + "\",\"data\":\"" + Convert.ToBase64String(abuffer) + "\"}";
+                                var buffer = System.Text.Encoding.UTF8.GetBytes(text);
+                                this.analysisStream.Write(buffer, 0, (int)buffer.Length);
+                            }
+                        }
+
+                        /*var currentTick = DateTime.Now.Ticks;
+                        this.audioMediaBuffers = Util.Utilities.CreateAudioMediaBuffers(abuffer, currentTick, _logger);
+                        await this.audioVideoFramePlayer.EnqueueBuffersAsync(this.audioMediaBuffers, new List<VideoMediaBuffer>());*/
                     }
                 }
             }
@@ -251,6 +287,18 @@ namespace EchoBot.Services.Bot
 
             this.audioMediaBuffers = e.AudioMediaBuffers;
             var result = Task.Run(async () => await this.audioVideoFramePlayer.EnqueueBuffersAsync(this.audioMediaBuffers, new List<VideoMediaBuffer>())).GetAwaiter();
+        }
+
+        /// <summary>
+        /// Gets the participant with the corresponding MSI.
+        /// </summary>
+        /// <param name="msi">media stream id.</param>
+        /// <returns>
+        /// The <see cref="IParticipant"/>.
+        /// </returns>
+        private IParticipant GetParticipantFromMSI(uint msi)
+        {
+            return this.call.Participants.SingleOrDefault(x => x.Resource.IsInLobby == false && x.Resource.MediaStreams.Any(y => y.SourceId == msi.ToString()));
         }
     }
 }

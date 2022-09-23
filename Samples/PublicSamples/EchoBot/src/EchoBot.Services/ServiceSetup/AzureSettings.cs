@@ -68,6 +68,7 @@ namespace EchoBot.Services.ServiceSetup
         {
             if (_settings.UseLocalDevSettings)
             {
+                _logger.LogInformation("use local dev settings");
                 // if running locally with ngrok
                 // the call signalling and notification will use the same internal and external ports
                 // because you cannot receive requests on the same tunnel with different ports

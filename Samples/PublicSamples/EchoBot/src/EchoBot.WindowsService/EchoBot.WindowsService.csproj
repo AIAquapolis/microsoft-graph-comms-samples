@@ -297,6 +297,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include=".env">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include=".env-template">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -1,0 +1,11 @@
+authtoken: 2EATJ5Y1z8sq7oaW7UGCddr3fTH_B95J1x1VpqC7EnsDpjBU
+version: "2"
+tunnels:
+  bot-signaling:
+    proto: http
+    addr: "9442"
+    #hostname: bot.teamsbot20220822.com
+  bot-media:
+    proto: tcp
+    addr: 8445
+    #remote_addr: 1.tcp.ngrok.io:12332

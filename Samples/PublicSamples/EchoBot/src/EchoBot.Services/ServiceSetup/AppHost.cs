@@ -126,7 +126,8 @@ namespace EchoBot.Services.ServiceSetup
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Unhandled exception in StartServer()");
+                //_logger.LogError(e, "Unhandled exception in StartServer()");
+                throw e;
             }
             _logger.LogInformation("EchoBot: running");
         }
