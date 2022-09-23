@@ -1,5 +1,8 @@
 # 使用方法
 
+1. 構成図通りに構成する
+1. PC2でのport proxyを設定し、 https://github.com/AIAquapolis/solepro_moriya_misc/issues/46#issuecomment-1256310560 のような出力となるようにする
+1. PC2のfirewallで14872,7000,9442を許可する
 1. src/EchoBot.sln をVisual Studioで実行し「開始」をクリックすると起動できる。ローカルのPCなどで実行する場合、途中でエラーが表示される場合があるが、しばらく待ってrunningと表示されれば成功している
 
 # 以下、オリジナルのREADME.md
