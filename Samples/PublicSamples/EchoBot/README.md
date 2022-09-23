@@ -35,7 +35,7 @@ curl --location --request POST 'https://botlocal.teamsbot20220822.com/joinCall' 
 # 各種アカウント
 
 - AWSアカウント(432373220957からswitch roleで224950003417)
-    - ドメイン管理用
+    - ドメイン管理・AWS環境が存在
 - office
     - developer用アカウント
 	- 共通パスワード c6M53hsrEqt*xE!R
@@ -47,6 +47,10 @@ curl --location --request POST 'https://botlocal.teamsbot20220822.com/joinCall' 
 - azure
     - h.kubota.nttr@gmail.com
 	- bot設定が存在する
+
+# AWS料金について
+
+引き継ぎのためにAWS環境を作成したが、料金がかかるので、当初の予算（10万円）を超えそうな場合は気をつけること。AWS環境に作成したリソースにはだいたいどれも（少なくとも料金がかかりそうなものは全て）teamsbot20220922というprefixをつけている
 
 
 # 以下、オリジナルのREADME.md
