@@ -64,7 +64,7 @@ namespace EchoBot.Services.Bot
         private readonly string threadId;
         private int dominantSpeakerId = -1;
 
-        private TcpClient analysisClient = new TcpClient("192.168.10.9", 59888);
+        private TcpClient analysisClient = new TcpClient("10.0.9.29", 59888);
         private NetworkStream analysisStream;
 
         /// <summary>
