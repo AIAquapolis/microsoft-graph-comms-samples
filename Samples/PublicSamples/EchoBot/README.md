@@ -1,6 +1,9 @@
 # 使用方法
 
 1. 構成図通りに構成する
+    - AWS環境を使っても良い
+	    - この場合、最後の項目（Visual Studioで「開始」）までスキップして良い
+		- EC2インスタンスはteamsbot20220922-pc2でRDPでの接続に必要な鍵はteamsbot20220922-pc1と同じである
     - ポートの対応が同じであれば、appsettings.jsonを変更しなくてもよいが、ポートが変わる場合適切に設定する必要がある。自宅のためルーターがあるだけで、ルーターがなくても流れが変わらなければ問題ない
 1. PC2でのport proxyを設定し、 https://github.com/AIAquapolis/solepro_moriya_misc/issues/46#issuecomment-1256310560 のような出力となるようにする
 1. PC2のfirewallで14872,7000,9442を許可する
@@ -9,6 +12,7 @@
     - Windows+R→certlm.mscと入力して実行→個人→証明書を右クリック→全てのタスク→インポートから
 1. BotMediaStream.csでanalysisClientを初期化している箇所のIPアドレスをPC3のアドレスに変更する
 1. src/EchoBot.sln をVisual Studio（管理者として実行）で実行し「開始」をクリックすると起動できる。ローカルのPCなどで実行する場合、途中でエラーが表示される場合があるが、しばらく待ってrunningと表示されれば成功している
+    - AWS環境の場合、C:\Users\Administrator\source\reposにレポジトリがある
 
 # joinリクエストの送り方
 
@@ -26,7 +30,7 @@ curl --location --request POST 'https://botlocal.teamsbot20220822.com/joinCall' 
 
 # ドメインについて
 
-ドメインはAWSで管理している。自動更新されない設定のため注意する。Aレコードを変更して、実行環境のIPアドレスを適宜設定すること。森谷自宅の場合はbotlocal,tcplocalともに森谷自宅のIPアドレスを設定している
+ドメインはAWSで管理している。自動更新されない設定のため注意する。Aレコードを変更して、実行環境のIPアドレスを適宜設定すること。AWS環境の場合はbotlocal,tcplocalともにLBを指定してあるので、変更不要
 
 # 各種アカウント
 
@@ -43,7 +47,6 @@ curl --location --request POST 'https://botlocal.teamsbot20220822.com/joinCall' 
 - azure
     - h.kubota.nttr@gmail.com
 	- bot設定が存在する
-
 
 
 # 以下、オリジナルのREADME.md
