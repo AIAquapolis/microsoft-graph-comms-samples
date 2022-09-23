@@ -1,3 +1,9 @@
+# 使用方法
+
+- src/EchoBot.sln をVisual Studioで実行し「開始」をクリックすると起動できる。ローカルのPCなどで実行する場合、途中でエラーが表示される場合があるが、しばらく待ってrunningと表示されれば成功している
+
+# 以下、オリジナルのREADME.md
+
 # Microsoft Graph Communications API and Samples
 
 The Microsoft Graph Communications API allows developers to programmatically interact with Microsoft's Communications Platform, which also powers Microsoft Teams, to create amazing experiences and products. Check out our samples in this repo to understand the capabilities of these APIs.
