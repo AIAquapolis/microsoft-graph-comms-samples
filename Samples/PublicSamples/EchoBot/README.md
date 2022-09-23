@@ -7,6 +7,7 @@
 1. https://github.com/AIAquapolis/solepro_moriya_misc/issues/46#issuecomment-1239318420 のコマンドを実行する
 1. https://github.com/AIAquapolis/solepro_moriya_misc/issues/46#issuecomment-1256343217 のzipの中のpfxファイルをインポートする
     - Windows+R→certlm.mscと入力して実行→個人→証明書を右クリック→全てのタスク→インポートから
+1. BotMediaStream.csでanalysisClientを初期化している箇所のIPアドレスをPC3のアドレスに変更する
 1. src/EchoBot.sln をVisual Studio（管理者として実行）で実行し「開始」をクリックすると起動できる。ローカルのPCなどで実行する場合、途中でエラーが表示される場合があるが、しばらく待ってrunningと表示されれば成功している
 
 # joinリクエストの送り方
