@@ -1,3 +1,9 @@
+# 使用方法
+
+1. src/EchoBot.sln をVisual Studioで実行し「開始」をクリックすると起動できる。ローカルのPCなどで実行する場合、途中でエラーが表示される場合があるが、しばらく待ってrunningと表示されれば成功している
+
+# 以下、オリジナルのREADME.md
+
 > **Note:**  
 > Public Samples are provided by developers from the Microsoft Graph community.  
 > Public Samples are not official Microsoft Communication samples, and not supported by the Microsoft Communication engineering team. It is recommended that you contact the sample owner before using code from Public Samples in production systems.
