@@ -4,6 +4,7 @@
     - ポートの対応が同じであれば、appsettings.jsonを変更しなくてもよいが、ポートが変わる場合適切に設定する必要がある。自宅のためルーターがあるだけで、ルーターがなくても流れが変わらなければ問題ない
 1. PC2でのport proxyを設定し、 https://github.com/AIAquapolis/solepro_moriya_misc/issues/46#issuecomment-1256310560 のような出力となるようにする
 1. PC2のfirewallで14872,7000,9442を許可する
+1. https://github.com/AIAquapolis/solepro_moriya_misc/issues/46#issuecomment-1239318420 のコマンドを実行する
 1. src/EchoBot.sln をVisual Studio（管理者として実行）で実行し「開始」をクリックすると起動できる。ローカルのPCなどで実行する場合、途中でエラーが表示される場合があるが、しばらく待ってrunningと表示されれば成功している
 
 # joinリクエストの送り方
