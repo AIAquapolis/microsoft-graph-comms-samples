@@ -21,7 +21,7 @@ curl --location --request POST 'https://botlocal.teamsbot20220822.com/joinCall' 
 
 # 証明書について
 
-有効期限が60-90日だったはずなので、切れたら再度発行する必要あり
+有効期限が60-90日だったはずなので、切れたら再度発行する必要あり。方法は下部のオリジナルのREADME.mdを参照すること
 
 # ドメインについて
 
