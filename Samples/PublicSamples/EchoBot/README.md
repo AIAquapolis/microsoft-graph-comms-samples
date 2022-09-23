@@ -5,6 +5,16 @@
 1. PC2のfirewallで14872,7000,9442を許可する
 1. src/EchoBot.sln をVisual Studioで実行し「開始」をクリックすると起動できる。ローカルのPCなどで実行する場合、途中でエラーが表示される場合があるが、しばらく待ってrunningと表示されれば成功している
 
+# joinリクエストの送り方
+
+以下のようなコマンドを実行すれば良い
+
+```
+curl --location --request POST 'https://botlocal.teamsbot20220822.com/joinCall' --header 'Content-Type: application/json' --data-raw '{"joinURL": "https://teams.microsoft.com/l/meetup-join/19%3ameeting_NzM4NDJmMDEtNWFmYS00OWU4LTliNDctYzgwMGU4ZmE2YTVk%40thread.v2/0?context=%7b%22Tid%22%3a%223755456d-0440-45e5-94ff-a6b4bc14ac2c%22%2c%22Oid%22%3a%2226312e58-550f-4bdd-a1e6-2048ddf5e05c%22%7d"}'
+```
+
+ただし、joinURLの中身はteamsの音声会議の画面の「会議の詳細を表示する」をクリックすると表示される「会議に参加するにはここをクリックしてください」というリンクのアドレスで置き換えること
+
 # 以下、オリジナルのREADME.md
 
 > **Note:**  
