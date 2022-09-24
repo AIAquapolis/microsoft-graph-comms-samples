@@ -12,7 +12,7 @@
     - Windows+R→certlm.mscと入力して実行→個人→証明書を右クリック→全てのタスク→インポートから
 1. BotMediaStream.csでanalysisClientを初期化している箇所のIPアドレスをPC1のアドレスに変更する
 1. src/EchoBot.sln をVisual Studio（管理者として実行）で実行し「開始」をクリックすると起動できる。ローカルのPCなどで実行する場合、途中でエラーが表示される場合があるが、しばらく待ってrunningと表示されれば成功している
-    - AWS環境の場合、C:\Users\Administrator\source\reposにレポジトリがある
+    - AWS環境の場合、C:\Users\Administrator\source\reposにレポジトリがある。AWS環境ではLoad balancerのヘルスチェックがあるため、ヘルスチェックが通らないと各種通信が届かないので、起動後しばらく待ってからjoinリクエストをする必要がある
 
 # joinリクエストの送り方
 
