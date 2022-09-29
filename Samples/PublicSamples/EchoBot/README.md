@@ -57,6 +57,9 @@ curl --location --request POST 'https://botlocal.teamsbot20220822.com/joinCall' 
 
 - [botのprofile](https://portal.azure.com/#@hkubotanttrgmail.onmicrosoft.com/resource/subscriptions/bc2cd67c-9d24-43d5-af54-51933bd6609c/resourceGroups/tmbot20220815/providers/Microsoft.BotService/botServices/tm202208222/profile)画面から設定可能です。変更が反映されるまでしばらく（1-2日）かかるかもしれません
 
+# teamsのチャット欄に画像や絵文字を投稿する方法
+
+- 現在利用中のAPIの[chat message 投稿 API](https://learn.microsoft.com/en-us/graph/api/chatmessage-post?view=graph-rest-1.0&tabs=http)にhtml形式のmessageを投稿するサンプルがあるため、これを応用すれば可能と思われる
 
 # 以下、オリジナルのREADME.md
 
