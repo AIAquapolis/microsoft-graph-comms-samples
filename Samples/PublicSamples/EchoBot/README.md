@@ -4,6 +4,7 @@
     - AWS環境を使っても良い
 	    - この場合、最後の項目（Visual Studioで「開始」）までスキップして良い
 		- EC2インスタンスはteamsbot20220922-pc2でRDPでの接続に必要な鍵はteamsbot20220922-pc1と同じである
+		- 追記: teamsbot20220922-pc2は作り直しているため、パスワードの取得ができなくなっている。パスワードは =r)&vo8njS-J5G!Td*pWLpdyd-si&YJS である
     - ポートの対応が同じであれば、appsettings.jsonを変更しなくてもよいが、ポートが変わる場合適切に設定する必要がある。自宅のためルーターがあるだけで、ルーターがなくても流れが変わらなければ問題ない
 1. PC2でのport proxyを設定し、 https://github.com/AIAquapolis/solepro_moriya_misc/issues/46#issuecomment-1256310560 のような出力となるようにする
 1. PC2のfirewallで14872,7000,9442を許可する
