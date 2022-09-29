@@ -53,6 +53,10 @@ curl --location --request POST 'https://botlocal.teamsbot20220822.com/joinCall' 
 
 引き継ぎのためにAWS環境を作成したが、料金がかかるので、当初の予算（10万円）を超えそうな場合は気をつけること。AWS環境に作成したリソースにはだいたいどれも（少なくとも料金がかかりそうなものは全て）teamsbot20220922というprefixをつけている
 
+# teamsに表示されるbotのアイコンの変更方法
+
+- [botのprofile](https://portal.azure.com/#@hkubotanttrgmail.onmicrosoft.com/resource/subscriptions/bc2cd67c-9d24-43d5-af54-51933bd6609c/resourceGroups/tmbot20220815/providers/Microsoft.BotService/botServices/tm202208222/profile)画面から設定可能です。変更が反映されるまでしばらく（1-2日）かかるかもしれません
+
 
 # 以下、オリジナルのREADME.md
 
